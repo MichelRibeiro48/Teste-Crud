@@ -1,37 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Teste-Crud
+## Bibliotecas Utilizadas
 
-## Getting Started
+nesse projeto foram utilizadas as seguintes bibliotecas:
 
-First, run the development server:
+- React
+- Next.js
+- Json-server
+- Zod
+- Styled Components
+- Tailwind ( padrão da tabela utilizada )
+- Shadcn/UI ( Tabela utilizada dessa lib de componentes )
+- React Hook Form
+- React Toastify
+- Axios
 
+## Inicializando o projeto
+Para iniciar o projeto é necessário rodar os seguintes comandos:
 ```bash
+npm i
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npx json-server src/database/db.json --port 3001
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Ojetivos do projeto
+Criação de um CRUD de equipamentos onde o usuário preenche um formulário sendo obrigatório preencher nome, tipo, marca e data de aquisição e ao preencher e clicar em adicionar ele adiciona o produto no banco de dados local da aplicação, os produtos sao mostrados em uma tabela logo abaixo e na tabela voce pode editar ou excluir o produto selecionado.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+A tabela possui ordenação caso clique na coluna sendo essa ordenação crescente ou decrescente e paginacao a cada 5 produtos.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+A aplicação possui resposta do serviços da API caso retorne erro ou sucesso em forma de uma notifição ( Popup ).
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# Teste-Crud
