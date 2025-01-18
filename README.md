@@ -9,6 +9,7 @@ nesse projeto foram utilizadas as seguintes bibliotecas:
 - Zod
 - Styled Components
 - Tailwind ( padrão da tabela utilizada )
+- Shadcn/UI ( Tabela utilizada dessa lib de componentes )
 - React Hook Form
 - React Toastify
 - Axios
