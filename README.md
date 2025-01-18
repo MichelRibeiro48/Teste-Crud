@@ -22,7 +22,7 @@ npx json-server src/database/db.json --port 3001
 ```
 
 ## Ojetivos do projeto
-Criação de um CRUD de equipamentos onde o usuário preenche um formulário sendo obrigatório preencher nome, tipo, marca e data de aquisição e ao preencher e clicar em adicionar ele adiciona o produto no banco de dados local da aplicação, os produtos sao mostrados em uma tabela logo abaixo e na tabela voce pode editar ou excluir o produto selecionado.
-A tabela possui ordenação caso clique na coluna sendo essa ordenação crescente ou decrescente e paginacao a cada 5 produtos.
+Criação de um CRUD de equipamentos onde o usuário preenche um formulário sendo obrigatório preencher nome, tipo, marca e data de aquisição e ao preencher e clicar em adicionar ele adiciona o produto no banco de dados local da aplicação, os produtos sao mostrados em uma tabela logo abaixo e na tabela voce pode editar ou excluir o produto selecionado. \n
+A tabela possui ordenação caso clique na coluna sendo essa ordenação crescente ou decrescente e paginacao a cada 5 produtos. \n
 A aplicação possui resposta do serviços da API caso retorne erro ou sucesso em forma de uma notifição ( Popup ).
 
