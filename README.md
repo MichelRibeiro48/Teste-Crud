@@ -1,4 +1,5 @@
 ## Teste-Crud
+[Video demonstrativo da aplicação rodando](https://youtu.be/CrMbOJDF-LE)
 ## Bibliotecas Utilizadas
 
 nesse projeto foram utilizadas as seguintes bibliotecas:
@@ -29,3 +30,8 @@ A tabela possui ordenação caso clique na coluna sendo essa ordenação crescen
 
 A aplicação possui resposta do serviços da API caso retorne erro ou sucesso em forma de uma notifição ( Popup ).
 
+## Pontos de melhoria
+
+- Ao alterar o produto seria melhor abrir uma pagina em vez de alterar na tabela
+- Adicionar testes unitários
+- Melhorar o layout da pagina
