@@ -3,5 +3,5 @@ export interface Equipment {
   name: string;
   type: string;
   brand: string;
-  acquisitionDate: Date;
+  acquisitionDate: string;
 }

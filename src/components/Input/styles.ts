@@ -52,3 +52,9 @@ export const StyledInput = styled.input`
   }
 
 `;
+
+export const ErrorMessage = styled.p`
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 0.25rem; 
+`;

@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "id": "edc9b4fe-b5b2-4ff9-85f9-9621589c7db6",
+      "name": "teste5",
+      "type": "teste5",
+      "brand": "teste5",
+      "acquisitionDate": "2025-01-20T00:00:00.000Z"
+    },
+    {
+      "id": "d863b508-37c1-4dd6-8d63-6bf8bf3b9937",
+      "name": "teste1",
+      "type": "teste1",
+      "brand": "teste1",
+      "acquisitionDate": "2001-10-11T00:00:00.000Z"
+    }
+  ]
+}

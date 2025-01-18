@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import PaginatedTable from "@/components/Table/table";
 import {
-  ButtonAdd,
   CardEquipment,
   ContainerEquipment,
   ContainerHeaderEquipment,
@@ -14,124 +14,88 @@ import {
 import InputEquipment from "@/components/Input";
 import Button from "@/components/Button";
 import { Equipment } from "@/types/equipment";
+import Popup from "@/components/Popup";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { createData, deleteData, getData, updateData } from "@/api/crud";
+import showToastSuccess from "@/utils/toast-success";
+import { equipmentSchema } from "@/utils/sendFormValidation";
+import Toast from "@/components/Toast/toast";
+import showToastError from "@/utils/toast-error";
 
 export default function ElectronicEquipmentCRUD() {
-  const [equipment, setEquipment] = useState<Equipment[]>([
-    {
-      id: "1",
-      name: "Laptop",
-      type: "Computer",
-      brand: "Samsung",
-      acquisitionDate: new Date(),
-    },
-    {
-      id: "2",
-      name: "Iphone 12",
-      type: "Celular",
-      brand: "Apple",
-      acquisitionDate: new Date(),
-    },
-    {
-      id: "3",
-      name: "RedMi 8",
-      type: "Celular",
-      brand: "Xiaomi",
-      acquisitionDate: new Date(),
-    },
-    {
-      id: "4",
-      name: "Laptop",
-      type: "Computer",
-      brand: "Samsung",
-      acquisitionDate: new Date(),
-    },
-    {
-      id: "5",
-      name: "Iphone 12",
-      type: "Celular",
-      brand: "Apple",
-      acquisitionDate: new Date(),
-    },
-    {
-      id: "6",
-      name: "RedMi 8",
-      type: "Celular",
-      brand: "Xiaomi",
-      acquisitionDate: new Date(),
-    },
-    {
-      id: "7",
-      name: "Laptop",
-      type: "Computer",
-      brand: "Samsung",
-      acquisitionDate: new Date(),
-    },
-    {
-      id: "8",
-      name: "Iphone 12",
-      type: "Celular",
-      brand: "Apple",
-      acquisitionDate: new Date(),
-    },
-    {
-      id: "9",
-      name: "RedMi 8",
-      type: "Celular",
-      brand: "Xiaomi",
-      acquisitionDate: new Date(),
-    },
-    {
-      id: "10",
-      name: "Laptop",
-      type: "Computer",
-      brand: "Samsung",
-      acquisitionDate: new Date(),
-    },
-    {
-      id: "11",
-      name: "Iphone 12",
-      type: "Celular",
-      brand: "Apple",
-      acquisitionDate: new Date(),
-    },
-    {
-      id: "12",
-      name: "RedMi 8",
-      type: "Celular",
-      brand: "Xiaomi",
-      acquisitionDate: new Date(),
-    },
-  ]);
-  const [newEquipment, setNewEquipment] = useState<Omit<Equipment, "id">>({
-    name: "",
-    type: "",
-    brand: "",
-    acquisitionDate: new Date(),
+  const [equipment, setEquipment] = useState<Equipment[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<Omit<Equipment, "id">>({
+    resolver: zodResolver(equipmentSchema),
   });
 
-  const addEquipment = () => {
-    setEquipment([...equipment, { ...newEquipment, id: crypto.randomUUID() }]);
-    setNewEquipment({
-      name: "",
-      type: "",
-      brand: "",
-      acquisitionDate: new Date(),
-    });
+  const getDataFromAPI = async () => {
+    try {
+      const data = await getData();
+      if (data) {
+        setEquipment(data);
+      }
+    } catch (error) {
+      console.log("Erro ao atualizar a lista de equipamentos", error);
+      // showToastError({ label: "Erro ao atualizar a lista de equipamentos!" });
+    }
   };
 
-  const updateEquipment = (
+  useEffect(() => {
+    getDataFromAPI();
+  }, []);
+
+  const onSubmit: SubmitHandler<Omit<Equipment, "id">> = async (data) => {
+    try {
+      const acquisitionDate =
+        data.acquisitionDate.toString().length > 0
+          ? new Date(data.acquisitionDate)
+          : new Date();
+      const newEquipment: Equipment = {
+        ...data,
+        id: crypto.randomUUID(),
+        acquisitionDate: new Date(acquisitionDate).toISOString(),
+      };
+      await createData(newEquipment);
+      await getDataFromAPI();
+      showToastSuccess({ label: "Equipamento adicionado com sucesso!" });
+    } catch (error) {
+      showToastError({ label: "Erro ao adicionar o equipamento!" });
+      console.log("Erro ao enviar novo equipamento", error);
+    }
+    reset();
+  };
+
+  const updateEquipment = async (
     id: string,
-    updatedEquipment: Omit<Equipment, "id">
+    updatedEquipment: Omit<Equipment, "id"> | {}
   ) => {
-    setEquipment(
-      equipment.map((item) =>
-        item.id === id ? { ...item, ...updatedEquipment } : item
-      )
-    );
+    try {
+      await updateData(id, updatedEquipment);
+      showToastSuccess({ label: "Equipamento atualizado com sucesso!" });
+      await getDataFromAPI();
+    } catch (error) {
+      showToastError({ label: "Erro ao atualizar o equipamento!" });
+      console.log("Erro ao atualizar o equipamento", error);
+    }
   };
 
-  const deleteEquipment = (id: string) => {
-    setEquipment(equipment.filter((item) => item.id !== id));
+  const deleteEquipment = async (id: string) => {
+    try {
+      await deleteData(id);
+      showToastSuccess({ label: "Equipamento deletado com sucesso!" });
+      await getDataFromAPI();
+    } catch (error) {
+      showToastError({ label: "Erro ao deletar o equipamento!" });
+      console.log("Erro ao deletar o equipamento", error);
+    }
   };
 
   return (
@@ -143,54 +107,33 @@ export default function ElectronicEquipmentCRUD() {
           </ContainerHeaderTitleEquipment>
         </ContainerHeaderEquipment>
         <ContainerInputEquipment>
-          <EquipmentForm
-            className="space-y-4"
-            onSubmit={(e) => {
-              e.preventDefault();
-              addEquipment();
-            }}
-          >
+          <EquipmentForm onSubmit={handleSubmit(onSubmit)}>
             <InputEquipment
               label="Nome"
               id="name"
-              onChange={(e) =>
-                setNewEquipment({ ...newEquipment, name: e.target.value })
-              }
-              value={newEquipment.name}
+              {...register("name")}
+              error={errors.name?.message}
             />
 
             <InputEquipment
               label="Tipo"
               id="type"
-              onChange={(e) =>
-                setNewEquipment({ ...newEquipment, type: e.target.value })
-              }
-              value={newEquipment.type}
+              {...register("type")}
+              error={errors.type?.message}
             />
 
             <InputEquipment
               label="Marca"
               id="brand"
-              onChange={(e) =>
-                setNewEquipment({ ...newEquipment, brand: e.target.value })
-              }
-              value={newEquipment.brand}
+              {...register("brand")}
+              error={errors.brand?.message}
             />
 
             <InputEquipment
               label="Data de aquisição"
               id="acquisitionDate"
-              onChange={(e) =>
-                setNewEquipment({
-                  ...newEquipment,
-                  acquisitionDate: new Date(e.target.value),
-                })
-              }
-              value={
-                newEquipment.acquisitionDate
-                  ? newEquipment.acquisitionDate.toISOString().split("T")[0]
-                  : ""
-              }
+              type="date"
+              {...register("acquisitionDate")}
             />
 
             <Button label="Adicionar" />
@@ -201,7 +144,7 @@ export default function ElectronicEquipmentCRUD() {
       <CardEquipment>
         <ContainerHeaderEquipment>
           <ContainerHeaderTitleEquipment>
-            Lista de equipamentos eletronicos
+            Lista de equipamentos
           </ContainerHeaderTitleEquipment>
         </ContainerHeaderEquipment>
         <ContainerInputEquipment>
@@ -209,9 +152,23 @@ export default function ElectronicEquipmentCRUD() {
             data={equipment}
             updateEquipment={updateEquipment}
             deleteEquipment={deleteEquipment}
+            showPopUp={() => setIsOpen(true)}
+            changeDeleteId={(e: string) => setDeleteId(e)}
           />
         </ContainerInputEquipment>
       </CardEquipment>
+      <Popup
+        close={() => setIsOpen(false)}
+        isOpen={isOpen}
+        onPressButton={() => {
+          deleteEquipment(deleteId);
+          setIsOpen(false);
+        }}
+        title="Atenção"
+        content={`Deseja realmente excluir o ID ${deleteId}`}
+        titleButton="Excluir"
+      />
+      <Toast />
     </ContainerEquipment>
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -25,19 +25,23 @@ import {
 } from "@/types/SortablePaginatedTable";
 import InputEquipment from "../Input";
 import Button from "../Button";
+import { Equipment } from "@/types/equipment";
 
 const SortablePaginatedTable = ({
   data,
   updateEquipment,
-  deleteEquipment,
+  showPopUp,
+  changeDeleteId,
 }: SortablePaginatedTableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [editedValues, setEditedValues] = useState<Partial<Equipment>>({});
   const [sortConfig, setSortConfig] = useState<{
     key: SortKey;
     direction: SortDirection;
   }>({ key: "id", direction: "asc" });
-  const itemsPerPage = 10;
+  const [isValid, setIsValid] = useState(false);
+  const itemsPerPage = 5;
 
   const sortedData = [...data].sort((a, b) => {
     if (!sortConfig.key) return 0;
@@ -62,6 +66,58 @@ const SortablePaginatedTable = ({
       return { key, direction: "asc" };
     });
   };
+
+  const handleEdit = (id: string) => {
+    setEditingId(id);
+    setEditedValues(data.find((item) => item.id === id) || {});
+  };
+
+  const handleSave = (id: string) => {
+    if (editedValues.acquisitionDate) {
+      const updatedDate = new Date(editedValues.acquisitionDate);
+      updatedDate.setDate(updatedDate.getDate());
+
+      const formattedDate = updatedDate.toISOString();
+
+      setEditedValues((prev) => ({
+        ...prev,
+        acquisitionDate: formattedDate,
+      }));
+      updateEquipment(id, { ...editedValues, acquisitionDate: formattedDate });
+    }
+
+    setEditingId(null);
+    setEditedValues({});
+  };
+
+  const handleCancel = () => {
+    setEditingId(null);
+    setEditedValues({});
+  };
+
+  const validateFields = () => {
+    const { name, type, brand, acquisitionDate } = editedValues;
+
+    const formatStringToDate = new Date(
+      typeof acquisitionDate === "string" ? acquisitionDate : ""
+    );
+
+    const isValidDate =
+      formatStringToDate instanceof Date &&
+      !isNaN(formatStringToDate.getTime());
+    setIsValid(
+      name?.trim() !== "" &&
+        type?.trim() !== "" &&
+        brand?.trim() !== "" &&
+        isValidDate
+    );
+  };
+
+  useEffect(() => {
+    if (editingId) {
+      validateFields();
+    }
+  }, [editedValues, editingId]);
 
   return (
     <CardTable>
@@ -117,13 +173,15 @@ const SortablePaginatedTable = ({
               <TableCell>
                 {editingId === item.id ? (
                   <InputEquipment
-                    value={item.name}
-                    onChange={(e) =>
-                      updateEquipment(item.id, {
-                        ...item,
+                    value={editedValues.name || ""}
+                    required
+                    onChange={(e) => {
+                      setEditedValues((prev) => ({
+                        ...prev,
                         name: e.target.value,
-                      })
-                    }
+                      }));
+                      validateFields();
+                    }}
                   />
                 ) : (
                   item.name
@@ -133,13 +191,15 @@ const SortablePaginatedTable = ({
               <TableCell>
                 {editingId === item.id ? (
                   <InputEquipment
-                    value={item.type}
-                    onChange={(e) =>
-                      updateEquipment(item.id, {
-                        ...item,
+                    value={editedValues.type || ""}
+                    required
+                    onChange={(e) => {
+                      setEditedValues((prev) => ({
+                        ...prev,
                         type: e.target.value,
-                      })
-                    }
+                      }));
+                      validateFields();
+                    }}
                   />
                 ) : (
                   item.type
@@ -149,13 +209,15 @@ const SortablePaginatedTable = ({
               <TableCell>
                 {editingId === item.id ? (
                   <InputEquipment
-                    value={item.brand}
-                    onChange={(e) =>
-                      updateEquipment(item.id, {
-                        ...item,
+                    value={editedValues.brand || ""}
+                    required
+                    onChange={(e) => {
+                      setEditedValues((prev) => ({
+                        ...prev,
                         brand: e.target.value,
-                      })
-                    }
+                      }));
+                      validateFields();
+                    }}
                   />
                 ) : (
                   item.brand
@@ -166,46 +228,52 @@ const SortablePaginatedTable = ({
                 {editingId === item.id ? (
                   <InputEquipment
                     value={
-                      item.acquisitionDate
-                        ? new Date(item.acquisitionDate)
+                      editedValues.acquisitionDate
+                        ? new Date(editedValues.acquisitionDate)
                             .toISOString()
                             .split("T")[0]
                         : ""
                     }
-                    onChange={(e) => {
-                      const selectedDate = e.target.value;
-                      const [year, month, day] = selectedDate
-                        .split("-")
-                        .map(Number);
-                      const fixedDate = new Date(year, month - 1, day);
-                      updateEquipment(item.id, {
-                        ...item,
-                        acquisitionDate: fixedDate,
-                      });
-                    }}
+                    id="acquisitionDate"
+                    type="date"
+                    required
+                    onChange={(e) =>
+                      setEditedValues((prev) => ({
+                        ...prev,
+                        acquisitionDate: e.target.value,
+                      }))
+                    }
                   />
                 ) : (
-                  new Date(item.acquisitionDate).toLocaleDateString("pt-BR")
+                  item.acquisitionDate
+                    .split("T")[0]
+                    .split("-")
+                    .reverse()
+                    .join("/")
                 )}
               </TableCell>
 
               <TableCell>
                 {editingId === item.id ? (
                   <ButtonActionsCard>
-                    <Button onClick={() => setEditingId(null)} label="Salvar" />
                     <Button
-                      onClick={() => setEditingId(null)}
-                      label="Cancelar"
+                      onClick={() => handleSave(item.id)}
+                      label="Salvar"
+                      disabled={!isValid}
                     />
+                    <Button onClick={() => handleCancel()} label="Cancelar" />
                   </ButtonActionsCard>
                 ) : (
                   <ButtonActionsCard>
                     <Button
-                      onClick={() => setEditingId(item.id)}
+                      onClick={() => handleEdit(item.id)}
                       icon={<Pencil className="h-4 w-4" />}
                     />
                     <Button
-                      onClick={() => deleteEquipment(item.id)}
+                      onClick={() => {
+                        showPopUp();
+                        changeDeleteId(item.id);
+                      }}
                       icon={<Trash2 className="h-4 w-4" />}
                     />
                   </ButtonActionsCard>
@@ -220,7 +288,6 @@ const SortablePaginatedTable = ({
         <PaginationButton
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
-          className="px-4 py-2 bg-gray-200 disabled:bg-gray-100 rounded"
         >
           Anterior
         </PaginationButton>
@@ -234,7 +301,6 @@ const SortablePaginatedTable = ({
             )
           }
           disabled={currentPage === Math.ceil(data.length / itemsPerPage)}
-          className="px-4 py-2 bg-gray-200 disabled:bg-gray-100 rounded"
         >
           Próxima
         </PaginationButton>
