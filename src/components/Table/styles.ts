@@ -19,11 +19,12 @@ export const PaginationCard = styled.div`
 `;
 export const PaginationButton = styled.button`
     padding: 0.5rem 0.25rem 0.5rem 0.25rem;
-    background-color: #e2e8f0;
+    background-color: #CECECE;
     border-radius: 0.25rem;
+    width: 2rem;
 
     &:disabled {
-      background-color: #f7fafc;
+      background-color: #F8F7F7;
     }
 `;
 

@@ -1,10 +1,7 @@
+import { showToastProps } from "@/types/toast";
 import { Bounce, toast } from "react-toastify";
 
-interface showToastErrorProps {
-  label: string;
-}
-
-export default function showToastError({ label }: showToastErrorProps) {
+export default function showToastError({ label }: showToastProps) {
   toast.error(label, {
     position: "top-center",
     autoClose: 5000,

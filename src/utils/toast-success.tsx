@@ -1,12 +1,7 @@
-"use client";
-
+import { showToastProps } from "@/types/toast";
 import { Bounce, toast } from "react-toastify";
 
-interface showToastSuccessProps {
-  label: string;
-}
-
-export default function showToastSuccess({ label }: showToastSuccessProps) {
+export default function showToastSuccess({ label }: showToastProps) {
   toast.success(label, {
     position: "top-center",
     autoClose: 5000,

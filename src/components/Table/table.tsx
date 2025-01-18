@@ -289,7 +289,7 @@ const SortablePaginatedTable = ({
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
         >
-          Anterior
+          {"<"}
         </PaginationButton>
         <CurrentPagination>
           Página {currentPage} de {Math.ceil(data.length / itemsPerPage)}
@@ -302,7 +302,7 @@ const SortablePaginatedTable = ({
           }
           disabled={currentPage === Math.ceil(data.length / itemsPerPage)}
         >
-          Próxima
+          {">"}
         </PaginationButton>
       </PaginationCard>
     </CardTable>

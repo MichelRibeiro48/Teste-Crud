@@ -44,7 +44,7 @@ export default function ElectronicEquipmentCRUD() {
       }
     } catch (error) {
       console.log("Erro ao atualizar a lista de equipamentos", error);
-      // showToastError({ label: "Erro ao atualizar a lista de equipamentos!" });
+      showToastError({ label: "Erro ao atualizar a lista de equipamentos!" });
     }
   };
 
@@ -165,7 +165,7 @@ export default function ElectronicEquipmentCRUD() {
           setIsOpen(false);
         }}
         title="Atenção"
-        content={`Deseja realmente excluir o ID ${deleteId}`}
+        content={`Deseja realmente excluir o produto com ID ${deleteId}`}
         titleButton="Excluir"
       />
       <Toast />

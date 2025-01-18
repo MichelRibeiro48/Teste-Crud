@@ -1,18 +1,32 @@
 {
   "data": [
     {
-      "id": "edc9b4fe-b5b2-4ff9-85f9-9621589c7db6",
-      "name": "teste5",
-      "type": "teste5",
-      "brand": "teste5",
-      "acquisitionDate": "2025-01-20T00:00:00.000Z"
+      "id": "7ef159a7-066c-46ac-8f17-181854f70c23",
+      "name": "Iphone 12",
+      "type": "Celular",
+      "brand": "Apple",
+      "acquisitionDate": "2001-10-10T00:00:00.000Z"
     },
     {
-      "id": "d863b508-37c1-4dd6-8d63-6bf8bf3b9937",
-      "name": "teste1",
-      "type": "teste1",
-      "brand": "teste1",
-      "acquisitionDate": "2001-10-11T00:00:00.000Z"
+      "id": "0c91a759-d0dd-4c2d-9836-a9030a175c36",
+      "name": "Macbook",
+      "type": "Notebook",
+      "brand": "Apple",
+      "acquisitionDate": "2001-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "682a009e-caea-42d3-91a6-5288721cd0da",
+      "name": "SmartWatch",
+      "type": "Eletronico",
+      "brand": "Samsung",
+      "acquisitionDate": "1978-02-25T00:00:00.000Z"
+    },
+    {
+      "id": "cf5b0dc3-f114-4680-9747-9e735d037709",
+      "name": "Tomada",
+      "type": "A",
+      "brand": "Pial Legrand",
+      "acquisitionDate": "1972-04-04T00:00:00.000Z"
     }
   ]
 }
