@@ -35,6 +35,5 @@ Foi adicionado o React Query para finalidade de fazer requisição somente quand
 
 ## Pontos de melhoria
 
-- Ao alterar o produto seria melhor abrir uma pagina em vez de alterar na tabela
 - Adicionar testes unitários
 - Melhorar o layout da pagina
