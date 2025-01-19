@@ -25,6 +25,16 @@ npm run dev
 npx json-server src/database/db.json --port 3001
 ```
 
+## Rodando Testes
+```bash
+#(Rodar o teste uma unica vez) 
+npm run test
+#(Rodar os testes atualizando com novas alterações)
+npm run test:watch
+#( Gerar a cobertura de testes )
+npm run test:coverage
+```
+
 ## Ojetivos do projeto
 Criação de um CRUD de equipamentos onde o usuário preenche um formulário sendo obrigatório preencher nome, tipo, marca e data de aquisição e ao preencher e clicar em adicionar ele adiciona o produto no banco de dados local da aplicação, os produtos sao mostrados em uma tabela logo abaixo e na tabela voce pode editar ou excluir o produto selecionado.
 
