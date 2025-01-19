@@ -14,6 +14,7 @@ nesse projeto foram utilizadas as seguintes bibliotecas:
 - React Hook Form
 - React Toastify
 - Axios
+- React Query
 
 ## Inicializando o projeto
 Para iniciar o projeto é necessário rodar os seguintes comandos:
@@ -30,8 +31,9 @@ A tabela possui ordenação caso clique na coluna sendo essa ordenação crescen
 
 A aplicação possui resposta do serviços da API caso retorne erro ou sucesso em forma de uma notifição ( Popup ).
 
+Foi adicionado o React Query para finalidade de fazer requisição somente quando necessário, e caso for um PATCH ou POST de um equipamento ele atualizar os dados locais e nao realizar requisicao de GET novamente
+
 ## Pontos de melhoria
 
-- Ao alterar o produto seria melhor abrir uma pagina em vez de alterar na tabela
 - Adicionar testes unitários
 - Melhorar o layout da pagina
