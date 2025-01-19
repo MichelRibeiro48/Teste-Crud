@@ -57,7 +57,10 @@ export default function FormNewEquipment() {
         </ContainerHeaderTitleEquipment>
       </ContainerHeaderEquipment>
       <ContainerInputEquipment>
-        <EquipmentForm onSubmit={handleSubmit(onSubmit)}>
+        <EquipmentForm
+          onSubmit={handleSubmit(onSubmit)}
+          data-testid="NewEquipmentForm"
+        >
           <InputEquipment
             label="Nome"
             id="name"

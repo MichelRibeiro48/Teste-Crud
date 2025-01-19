@@ -18,7 +18,7 @@ export const ContainerHeaderEquipment = styled.div`
   padding: 1.5rem;
 `;
 
-export const ContainerHeaderTitleEquipment = styled.div`
+export const ContainerHeaderTitleEquipment = styled.h1`
   font-size: 1.5rem; 
   font-weight: 600;
   line-height: 1;
