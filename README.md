@@ -15,6 +15,7 @@ nesse projeto foram utilizadas as seguintes bibliotecas:
 - React Toastify
 - Axios
 - React Query
+- Vitest ( Testes unitários e E2E )
 
 ## Inicializando o projeto
 Para iniciar o projeto é necessário rodar os seguintes comandos:
@@ -35,5 +36,5 @@ Foi adicionado o React Query para finalidade de fazer requisição somente quand
 
 ## Pontos de melhoria
 
-- Adicionar testes unitários
+- Adicionar mais testes unitários
 - Melhorar o layout da pagina
